@@ -17,7 +17,7 @@ const CONFIG = Object.freeze({
 
   animation: {
     springReleaseDurationMs: 600,
-    collisionDurationMs: 170,
+    collisionDurationMs: 0,
     cartTravelDurationBySpeedMs: {
       "1": 1400,
       "1.5": 1200,

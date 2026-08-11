@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Collision Investigation</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="app-header">
+      <h1>Collision Investigation</h1>
+      <p>How do the mass and speed of a moving cart affect how far a box is pushed?</p>
+    </header>
+
+    <section class="simulation-card" aria-label="Collision simulation">
+      <svg
+        id="simulation-svg"
+        class="simulation-svg"
+        viewBox="0 0 1200 360"
+        role="img"
+        aria-labelledby="simulation-title simulation-description"
+      >
+        <title id="simulation-title">Cart collision apparatus</title>
+        <desc id="simulation-description">
+          A spring launcher pushes a loaded cart along a track into a stationary box. A ruler measures how far the box moves.
+        </desc>
+
+        <!-- Background -->
+        <rect class="scene-background" x="0" y="0" width="1200" height="360" rx="18" />
+
+        <!-- Launcher -->
+        <g id="launcher" aria-hidden="true">
+          <rect class="launcher-base" x="52" y="217" width="78" height="18" rx="5" />
+          <rect class="launcher-post" x="64" y="118" width="22" height="112" rx="4" />
+          <rect class="launcher-cap" x="54" y="110" width="42" height="14" rx="4" />
+        </g>
+
+        <!-- Spring -->
+        <polyline id="spring" class="spring" points="" aria-hidden="true" />
+
+        <!-- Track -->
+        <g id="track" aria-hidden="true">
+          <rect class="track-rail" x="48" y="248" width="1104" height="10" rx="5" />
+          <rect class="track-edge" x="48" y="266" width="1104" height="4" rx="2" />
+        </g>
+
+        <!-- Ruler, zeroed at initial box position -->
+        <g id="ruler" aria-hidden="true"></g>
+
+        <!-- Cart -->
+        <g id="cart" aria-hidden="true">
+          <g id="mass-blocks"></g>
+          <rect class="cart-body" x="0" y="0" width="110" height="58" rx="10" />
+          <rect class="cart-top" x="12" y="-10" width="86" height="14" rx="5" />
+          <circle class="cart-wheel" cx="26" cy="64" r="15" />
+          <circle class="cart-wheel" cx="84" cy="64" r="15" />
+          <circle class="cart-hub" cx="26" cy="64" r="6" />
+          <circle class="cart-hub" cx="84" cy="64" r="6" />
+        </g>
+
+        <!-- Box -->
+        <g id="box" aria-hidden="true">
+          <rect class="box-body" x="0" y="0" width="72" height="76" rx="7" />
+          <path class="box-detail" d="M 0 18 H 72 M 36 0 V 18" />
+        </g>
+
+        <!-- Starting-position marker -->
+        <g id="start-marker" aria-hidden="true">
+          <line class="start-marker-line" x1="560" y1="176" x2="560" y2="244" />
+          <text class="start-marker-label" x="560" y="164" text-anchor="middle">Box start</text>
+        </g>
+      </svg>
+    </section>
+
+    <section class="control-panel" aria-label="Simulation controls">
+      <div class="control-group">
+        <div class="control-heading">
+          <span>Cart mass</span>
+          <span class="unit">kg</span>
+        </div>
+        <div id="mass-options" class="option-row" role="group" aria-label="Cart mass in kilograms">
+          <button type="button" class="option-button" data-mass="0.5" aria-pressed="false">0.5</button>
+          <button type="button" class="option-button" data-mass="1.0" aria-pressed="true">1.0</button>
+          <button type="button" class="option-button" data-mass="1.5" aria-pressed="false">1.5</button>
+          <button type="button" class="option-button" data-mass="2.0" aria-pressed="false">2.0</button>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="control-heading">
+          <span>Launch speed</span>
+          <span class="unit">m/s</span>
+        </div>
+        <div id="speed-options" class="option-row" role="group" aria-label="Launch speed in metres per second">
+          <button type="button" class="option-button" data-speed="1.0" aria-pressed="false">1.0</button>
+          <button type="button" class="option-button" data-speed="1.5" aria-pressed="false">1.5</button>
+          <button type="button" class="option-button" data-speed="2.0" aria-pressed="true">2.0</button>
+          <button type="button" class="option-button" data-speed="2.5" aria-pressed="false">2.5</button>
+          <button type="button" class="option-button" data-speed="3.0" aria-pressed="false">3.0</button>
+        </div>
+      </div>
+
+      <div class="action-group">
+        <button id="launch-button" class="action-button action-primary" type="button">Launch</button>
+        <button id="reset-button" class="action-button action-secondary" type="button">Reset</button>
+      </div>
+
+      <div class="result-panel" aria-live="polite">
+        <span class="result-label">Distance travelled</span>
+        <strong id="distance-result" class="result-value">—</strong>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
